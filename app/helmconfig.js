@@ -10,13 +10,12 @@
  */
 
 // Import all your needed files first (webpack will grab the url)
-import favicon from 'images/favicon.png';
+import favicon from './images/favicon.png';
 
 const config = {
   link: [
     { rel: 'icon', href: favicon },
-    { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/slate/bootstrap.min.css' },
-    { rel: 'stylesheet', href: '/assets/styles/main.css' }
+    { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/slate/bootstrap.min.css' }
   ],
   meta: [
     { charset: 'utf-8' },
@@ -33,7 +32,7 @@ const config = {
     // Add to homescreen for Safari on IOS
     { name: 'apple-mobile-web-app-capable', content: 'yes' },
     { name: 'apple-mobile-web-app-status-bar-style', content: 'black' },
-    { name: 'apple-mobile-web-app-title', content: 'React Webpack Node' }
+    { name: 'apple-mobile-web-app-title', content: 'Poll' }
   ]
 };
 

@@ -113,7 +113,7 @@ export default function render(req, res) {
               ${header.link.toString()}
             </head>
             <body>
-              <div id="app">${componentHTML}</div>
+              <div id="app" class="container">${componentHTML}</div>
               <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
               <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
             </body>
