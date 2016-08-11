@@ -3,10 +3,10 @@ import React from 'react';
 import { renderToString } from 'react-dom/server';
 import { createMemoryHistory, match, RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
-import createRoutes from 'routes';
-import configureStore from 'store/configureStore';
-import preRenderMiddleware from 'middlewares/preRenderMiddleware';
-import header from 'components/Meta';
+import createRoutes from './routes';
+import configureStore from './store/configureStore';
+import preRenderMiddleware from './middlewares/preRenderMiddleware';
+import header from './components/Meta';
 
 const clientConfig = {
   host: process.env.HOSTNAME || 'localhost',
@@ -17,31 +17,31 @@ const clientConfig = {
 axios.defaults.baseURL = `http://${clientConfig.host}:${clientConfig.port}`;
 
 
-const analtyicsScript =
-  typeof trackingID === "undefined" ? ``
-  :
-  `<script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
-    ga('create', ${trackingID}, 'auto');
-    ga('send', 'pageview');
-  </script>`;
-
-
-/*
- * To Enable Google analytics simply replace the hashes with your tracking ID
- * and move the constant to above the analtyicsScript constant.
- *
- * Currently because the ID is declared beneath where is is being used, the
- * declaration will get hoisted to the top of the file.
- * however the assignement  does not, so it is undefined for the type check above.
- * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting
- */
-const trackingID  = "'UA-########-#'";
-
-
+// const analtyicsScript =
+//   typeof trackingID === "undefined" ? ``
+//   :
+//   `<script>
+//     (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+//     (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+//     m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+//     })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+//     ga('create', ${trackingID}, 'auto');
+//     ga('send', 'pageview');
+//   </script>`;
+//
+//
+// /*
+//  * To Enable Google analytics simply replace the hashes with your tracking ID
+//  * and move the constant to above the analtyicsScript constant.
+//  *
+//  * Currently because the ID is declared beneath where is is being used, the
+//  * declaration will get hoisted to the top of the file.
+//  * however the assignement  does not, so it is undefined for the type check above.
+//  * https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/var#var_hoisting
+//  */
+// const trackingID  = "'UA-########-#'";
+// add to body below
+// ${analtyicsScript}
 
 
 /*
@@ -115,7 +115,6 @@ export default function render(req, res) {
             <body>
               <div id="app">${componentHTML}</div>
               <script>window.__INITIAL_STATE__ = ${JSON.stringify(initialState)};</script>
-              ${analtyicsScript}
               <script type="text/javascript" charset="utf-8" src="/assets/app.js"></script>
             </body>
           </html>
