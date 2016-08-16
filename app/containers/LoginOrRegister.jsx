@@ -12,6 +12,9 @@ const validate = values => {
   if (!values.password) {
     errors.password = 'Required';
   }
+  if (!values.name) {
+    errors.name = 'Required';
+  }
   return errors;
 };
 
@@ -21,8 +24,9 @@ class LoginOrRegister extends Component {
     this.submit = this.submit.bind(this);
   }
   submit() {
-    const {manualLogin, signUp, user: {isLogin}, fields: { email, password } } = this.props;
+    const {manualLogin, signUp, user: {isLogin}, fields: { email, password, name } } = this.props;
     const emailPass = {
+      name: name.value,
       email: email.value,
       password: password.value
     };
@@ -63,17 +67,25 @@ class LoginOrRegister extends Component {
           <a onClick={toggleLoginMode}>
             Login Here
           </a>
-          <p>Add name option</p>
         </div>
       </div>
     );
   }
   render() {
-    const { fields: { email, password }, resetForm, handleSubmit, submitting } = this.props;
+    const { fields: { email, password, name }, user: { isLogin }, resetForm, handleSubmit, submitting } = this.props;
     return (
       <div>
         { this.renderHeader() }
         <form className="form-horizontal" onSubmit={handleSubmit(this.submit)}>
+          {isLogin ? null :
+            <div className={'form-group' + (name.touched && name.error ? ' has-error' : '')}>
+              <label htmlFor="nameInput" className="col-sm-2 control-label">Name</label>
+              <div className={'col-sm-' + (name.touched && name.error ? '5' : '8')}>
+                <input id="nameInput" type="text" className="col-sm-8 form-control" placeholder="Name" {...name} />
+              </div>
+              {name.touched && name.error && <div className="col-sm-3 help-block">{name.error}</div>}
+            </div>
+          }
           <div className={'form-group' + (email.touched && email.error ? ' has-error' : '')}>
             <label htmlFor="emailInput" className="col-sm-2 control-label">Email</label>
             <div className={'col-sm-' + (email.touched && email.error ? '5' : '8')}>
@@ -96,9 +108,10 @@ class LoginOrRegister extends Component {
               Clear Values
             </button>
           </div>
+          <hr />
           <div className="text-center">
-            <h2>Google Login needs setup</h2>
-            <a className="btn btn-default btn-lg" href="/auth/google">Login with Google</a>
+            <h2>Login with:</h2>
+            <a className="btn btn-danger btn-lg" href="/auth/google">Google</a>
           </div>
         </form>
       </div>
@@ -122,7 +135,7 @@ function mapStateToProps({user}) {
 const formConfig = {
   form: 'login',
   fields: [
-    'email', 'password'
+    'email', 'password', 'name'
   ],
   validate
 };
