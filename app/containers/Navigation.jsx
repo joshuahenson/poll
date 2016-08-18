@@ -22,10 +22,10 @@ const Navigation = ({ user, logOut }) => {
           </Nav>
           <Nav pullRight>
           { user.authenticated ? ([
-            <LinkContainer to="/dashboard">
+            <LinkContainer key="dashboard" to="/dashboard">
               <NavItem>Dashboard</NavItem>
             </LinkContainer>,
-            <LinkContainer active={false} onClick={logOut} to="/">
+            <LinkContainer key="logout" active={false} onClick={logOut} to="/">
               <NavItem>Logout</NavItem>
             </LinkContainer>
           ]) : (
