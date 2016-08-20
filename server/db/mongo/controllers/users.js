@@ -1,5 +1,5 @@
-import User from '../models/user';
 import passport from 'passport';
+import User from '../models/user';
 
 /**
  * POST /login
@@ -38,7 +38,10 @@ export function logout(req, res) {
 export function signUp(req, res, next) {
   const user = new User({
     email: req.body.email,
-    password: req.body.password
+    password: req.body.password,
+    profile: {
+      name: req.body.name
+    }
   });
 
   User.findOne({ email: req.body.email }, (findErr, existingUser) => {
