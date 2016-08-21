@@ -56,6 +56,7 @@ export default function render(req, res) {
     user: {
       authenticated,
       isWaiting: false,
+      userObj: req.user,
       message: '',
       isLogin: true
     }

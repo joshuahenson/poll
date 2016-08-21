@@ -72,9 +72,21 @@ const authenticated = (
   }
 };
 
+// handled server-side
+const userObj = (
+  state = null,
+  action
+) => {
+  switch (action.type) {
+    default:
+      return state;
+  }
+};
+
 const userReducer = combineReducers({
   isLogin,
   isWaiting,
+  userObj,
   authenticated,
   message
 });
