@@ -1,5 +1,5 @@
-import * as types from 'types';
 import { combineReducers } from 'redux';
+import * as types from '../types';
 
 const isLogin = (
   state = true,
@@ -78,6 +78,8 @@ const userObj = (
   action
 ) => {
   switch (action.type) {
+    case types.LOGOUT_SUCCESS_USER:
+      return null;
     default:
       return state;
   }
