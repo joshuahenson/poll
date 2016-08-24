@@ -1,6 +1,7 @@
 import React, {Component, PropTypes} from 'react';
 import {reduxForm} from 'redux-form';
-import {manualLogin, signUp, toggleLoginMode} from '../actions/users';
+import GoogleLogin from '../components/GoogleLogin';
+import {signUp, toggleLoginMode} from '../actions/users';
 
 const validate = values => {
   const errors = {};
@@ -18,74 +19,41 @@ const validate = values => {
   return errors;
 };
 
-class LoginOrRegister extends Component {
+class Register extends Component {
   constructor(props) {
     super(props);
     this.submit = this.submit.bind(this);
   }
   submit() {
-    const {manualLogin, signUp, user: {isLogin}, fields: { email, password, name } } = this.props;
-    const emailPass = {
-      name: name.value,
-      email: email.value,
-      password: password.value
-    };
-
-    if (isLogin) {
-      manualLogin(emailPass);
-    } else {
-      signUp(emailPass);
-    }
+    const {signUp, fields: { email, password, name } } = this.props;
+    signUp({
+        name: name.value,
+        email: email.value,
+        password: password.value
+    });
   }
-  loginButtonText() {
-    if (this.props.user.isLogin) {
-      return 'Login';
-    }
-    return 'Register';
-  }
-  renderHeader() {
-    const {user: {isLogin}, toggleLoginMode} = this.props;
-    if (isLogin) {
-      return (
+  // TODO: update submitting prop
+  render() {
+    const { fields: { email, password, name }, resetForm, handleSubmit, submitting, toggleLoginMode } = this.props;
+    return (
+      <div>
         <div className="text-center">
-          <h2>Login with Email</h2>
+          <h2>Register with Email</h2>
           <div>
-            If you don't yet have an account. &nbsp;
+            Already have an account? &nbsp;
             <a onClick={toggleLoginMode}>
-              Register Here
+              Login Here
             </a>
           </div>
         </div>
-      );
-    }
-
-    return (
-      <div className="text-center">
-        <h2>Register with Email</h2>
-        <div>
-          Already have an account? &nbsp;
-          <a onClick={toggleLoginMode}>
-            Login Here
-          </a>
-        </div>
-      </div>
-    );
-  }
-  render() {
-    const { fields: { email, password, name }, user: { isLogin }, resetForm, handleSubmit, submitting } = this.props;
-    return (
-      <div>
-        { this.renderHeader() }
         <form className="form-horizontal" onSubmit={handleSubmit(this.submit)}>
-          {isLogin ? null :
-            <div className={'form-group' + (name.touched && name.error ? ' has-error' : '')}>
-              <label htmlFor="nameInput" className="col-sm-2 control-label">Name</label>
-              <div className={'col-sm-' + (name.touched && name.error ? '5' : '8')}>
-                <input id="nameInput" type="text" className="col-sm-8 form-control" placeholder="Name" {...name} />
-              </div>
-              {name.touched && name.error && <div className="col-sm-3 help-block">{name.error}</div>}
+          <div className={'form-group' + (name.touched && name.error ? ' has-error' : '')}>
+            <label htmlFor="nameInput" className="col-sm-2 control-label">Name</label>
+            <div className={'col-sm-' + (name.touched && name.error ? '5' : '8')}>
+              <input id="nameInput" type="text" className="col-sm-8 form-control" placeholder="Name" {...name} />
             </div>
-          }
+            {name.touched && name.error && <div className="col-sm-3 help-block">{name.error}</div>}
+          </div>
           <div className={'form-group' + (email.touched && email.error ? ' has-error' : '')}>
             <label htmlFor="emailInput" className="col-sm-2 control-label">Email</label>
             <div className={'col-sm-' + (email.touched && email.error ? '5' : '8')}>
@@ -102,24 +70,21 @@ class LoginOrRegister extends Component {
           </div>
           <div className="text-center">
             <button type="submit" className="btn btn-primary btn-lg" style={{ margin: 10 }} disabled={submitting}>
-              {submitting ? 'Submitting...' : this.loginButtonText()}
+              {submitting ? 'Registering...' : 'Register'}
             </button>
             <button type="button" className="btn btn-default btn-lg" style={{ margin: 10 }} disabled={submitting} onClick={resetForm}>
               Clear Values
             </button>
           </div>
           <hr />
-          <div className="text-center">
-            <h2>Login with:</h2>
-            <a className="btn btn-danger btn-lg" href="/auth/google">Google</a>
-          </div>
+          <GoogleLogin />
         </form>
       </div>
     );
   }
 }
 
-LoginOrRegister.propTypes = {
+Register.propTypes = {
   user: PropTypes.object,
   manualLogin: PropTypes.func.isRequired,
   signUp: PropTypes.func.isRequired,
@@ -141,4 +106,4 @@ const formConfig = {
 };
 
 // reduxForm connects redux store/form to app
-export default reduxForm(formConfig, mapStateToProps, {manualLogin, signUp, toggleLoginMode})(LoginOrRegister);
+export default reduxForm(formConfig, mapStateToProps, {signUp, toggleLoginMode})(Register);
