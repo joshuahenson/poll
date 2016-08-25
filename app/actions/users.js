@@ -2,7 +2,7 @@ import { polyfill } from 'es6-promise';
 import request from 'axios';
 import { push } from 'react-router-redux';
 
-import * as types from 'types';
+import * as types from '../types';
 
 polyfill();
 
@@ -26,10 +26,11 @@ export function beginLogin() {
   return { type: types.MANUAL_LOGIN_USER };
 }
 
-export function loginSuccess(message) {
+export function loginSuccess(message, user) {
   return {
     type: types.LOGIN_SUCCESS_USER,
-    message
+    message,
+    user
   };
 }
 
@@ -83,7 +84,7 @@ export function manualLogin(data) {
     return makeUserRequest('post', data, '/login')
       .then(response => {
         if (response.status === 200) {
-          dispatch(loginSuccess(response.data.message));
+          dispatch(loginSuccess(response.data.message, response.data.user));
           dispatch(push('/'));
         } else {
           dispatch(loginError('Oops! Something went wrong!'));

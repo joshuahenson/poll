@@ -72,7 +72,6 @@ const authenticated = (
   }
 };
 
-// handled server-side
 const userObj = (
   state = null,
   action
@@ -80,6 +79,8 @@ const userObj = (
   switch (action.type) {
     case types.LOGOUT_SUCCESS_USER:
       return null;
+    case types.LOGIN_SUCCESS_USER:
+      return action.user;
     default:
       return state;
   }
