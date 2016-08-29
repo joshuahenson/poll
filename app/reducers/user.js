@@ -80,6 +80,7 @@ const userObj = (
     case types.LOGOUT_SUCCESS_USER:
       return null;
     case types.LOGIN_SUCCESS_USER:
+    case types.SIGNUP_SUCCESS_USER:
       return action.user;
     default:
       return state;

@@ -55,6 +55,7 @@ export function signUp(req, res, next) {
       return req.logIn(user, (loginErr) => {
         if (loginErr) return res.status(401).json({ message: loginErr });
         return res.status(200).json({
+          user: req.user,
           message: 'You have been successfully logged in.'
         });
       });
