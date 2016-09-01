@@ -37,7 +37,7 @@ export default (app) => {
     // Otherwise, the authentication has failed.
     app.get('/auth/google/callback',
       passport.authenticate('google', {
-        successRedirect: '/',
+        successRedirect: '/dashboard',
         failureRedirect: '/login'
       })
     );

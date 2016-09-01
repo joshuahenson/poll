@@ -86,7 +86,7 @@ export function manualLogin(data) {
       .then(response => {
         if (response.status === 200) {
           dispatch(loginSuccess(response.data.message, response.data.user));
-          dispatch(push('/'));
+          dispatch(push('/dashboard'));
         } else {
           dispatch(loginError('Oops! Something went wrong!'));
         }
@@ -105,7 +105,7 @@ export function signUp(data) {
       .then(response => {
         if (response.status === 200) {
           dispatch(signUpSuccess(response.data.message, response.data.user));
-          dispatch(push('/'));
+          dispatch(push('/dashboard'));
         } else {
           dispatch(signUpError('Oops! Something went wrong'));
         }
