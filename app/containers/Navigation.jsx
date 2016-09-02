@@ -15,25 +15,32 @@ const Navigation = ({ user, logOut }) => {
           <Navbar.Toggle />
         </Navbar.Header>
         <Navbar.Collapse>
-          <Nav>
-            <LinkContainer to="/about">
-              <NavItem>About</NavItem>
-            </LinkContainer>
-          </Nav>
-          <Nav pullRight>
           { user.authenticated ? ([
-            <LinkContainer key="dashboard" to="/dashboard">
-              <NavItem>Dashboard</NavItem>
-            </LinkContainer>,
-            <LinkContainer key="logout" active={false} onClick={logOut} to="/">
-              <NavItem>Logout</NavItem>
-            </LinkContainer>
-          ]) : (
-            <LinkContainer to="/login">
-              <NavItem>Login</NavItem>
-            </LinkContainer>
-          )}
-          </Nav>
+            <Nav key="left">
+              <LinkContainer to="/about">
+                <NavItem>About</NavItem>
+              </LinkContainer>
+              <LinkContainer to="/dashboard">
+                <NavItem>Dashboard</NavItem>
+              </LinkContainer>
+            </Nav>,
+            <Nav pullRight key="right">
+              <LinkContainer active={false} onClick={logOut} to="/">
+                <NavItem>Logout</NavItem>
+              </LinkContainer>
+            </Nav>
+          ]) : ([
+            <Nav key="left">
+              <LinkContainer to="/about">
+                <NavItem>About</NavItem>
+              </LinkContainer>
+            </Nav>,
+            <Nav pullRight key="right">
+              <LinkContainer to="/login">
+                <NavItem>Login</NavItem>
+              </LinkContainer>
+            </Nav>
+          ])}
         </Navbar.Collapse>
       </Navbar>
     );
