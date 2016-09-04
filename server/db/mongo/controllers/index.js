@@ -1,9 +1,11 @@
 import topics from './topics';
 import users from './users';
+import poll from './poll';
 
-export { topics, users };
+export { topics, users, poll };
 
 export default {
   topics,
-  users
+  users,
+  poll
 };
