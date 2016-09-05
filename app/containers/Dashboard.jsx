@@ -1,10 +1,7 @@
 import React from 'react';
+import CreatePoll from './CreatePoll';
 
-/*
- * Note: This is kept as a container-level component,
- *  i.e. We should keep this as the container that does the data-fetching
- *  and dispatching of actions if you decide to have any sub-components.
- */
-const Dashboard = () => <div>Welcome to the Dasboard. Stay tuned...</div>;
+// TODO: After testing, change to link to CreatePoll and other items
+const Dashboard = () => <CreatePoll />;
 
 export default Dashboard;
