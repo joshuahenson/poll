@@ -13,11 +13,11 @@ export function getPolls(req, res) {
 }
 
 export function addPoll(req, res) {
-  if (!req.body.poll.name || !req.body.poll.title) {
+  if (!req.body.name || !req.body.title) {
     res.status(403).end();
   }
 
-  const newPoll = new Poll(req.body.poll);
+  const newPoll = new Poll(req.body);
 
   // Let's sanitize inputs
   newPoll.title = sanitizeHtml(newPoll.title);
@@ -35,7 +35,7 @@ export function addPoll(req, res) {
     if (err) {
       res.status(500).send(err);
     }
-    res.json({ poll: saved });
+    res.json(saved);
   });
 }
 

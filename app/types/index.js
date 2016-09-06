@@ -23,3 +23,5 @@ export const SIGNUP_ERROR_USER = 'SIGNUP_ERROR_USER';
 export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOGOUT_SUCCESS_USER = 'LOGOUT_SUCCESS_USER';
 export const LOGOUT_ERROR_USER = 'LOGOUT_ERROR_USER';
+
+export const ADD_POLL = 'ADD_POLL';

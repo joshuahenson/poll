@@ -18,19 +18,19 @@ const validate = values => {
   return errors;
 };
 
-class AddPollForm extends Component {
+class CreatePoll extends Component {
   constructor(props) {
     super(props);
     this.submit = this.submit.bind(this);
   }
   submit() {
-    const { fields: { name, title, options } } = this.props;
+    const { addPollRequest, fields: { name, title, options } } = this.props;
     const poll = {
       name: name.value,
       title: title.value,
       options: options.value.split(',').map(optionI => ({ option: optionI.trim() }))
     };
-    this.props.dispatch(addPollRequest(poll));
+    addPollRequest(poll);
   }
   render() {
     const { fields: { name, title, options }, handleSubmit } = this.props; // reduxForm props
@@ -59,8 +59,8 @@ class AddPollForm extends Component {
   }
 }
 
-AddPollForm.propTypes = {
-  dispatch: PropTypes.func,
+CreatePoll.propTypes = {
+  addPollRequest: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func,
   fields: PropTypes.object
 };
@@ -69,4 +69,4 @@ export default reduxForm({
   form: 'addPoll',
   fields: ['name', 'title', 'options'],
   validate
-})(AddPollForm);
+}, null, { addPollRequest })(CreatePoll);
