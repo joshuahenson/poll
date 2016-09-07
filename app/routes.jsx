@@ -2,7 +2,7 @@ import React from 'react';
 import { Route, IndexRoute } from 'react-router';
 
 import App from './containers/App';
-import Vote from './containers/Vote';
+import Polls from './containers/Polls';
 import About from './components/About';
 import Auth from './containers/Auth';
 import Dashboard from './containers/Dashboard';
@@ -35,7 +35,7 @@ export default (store) => {
   };
   return (
     <Route path="/" component={App}>
-      <IndexRoute component={Vote} />
+      <IndexRoute component={Polls} />
       <Route path="login" component={Auth} onEnter={redirectAuth} />
       <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
       <Route path="about" component={About} />

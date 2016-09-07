@@ -25,3 +25,24 @@ export function addPollRequest(poll) {
     .then(res => dispatch(addPoll(res.data)));
   };
 }
+
+export function addSelectedPoll(poll) {
+  return {
+    type: types.ADD_SELECTED_POLL,
+    poll,
+  };
+}
+
+export function addPolls(polls) {
+  return {
+    type: types.ADD_POLLS,
+    polls
+  };
+}
+
+export function fetchPolls() {
+  return (dispatch) => {
+    return axios.get('/getPolls')
+      .then(res => dispatch(addPolls(res.data.polls)));
+  };
+}
