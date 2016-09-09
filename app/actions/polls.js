@@ -33,6 +33,13 @@ export function addSelectedPoll(poll) {
   };
 }
 
+export function getPollRequest(poll) {
+  return (dispatch) => {
+    return axios.get(`/getPoll?slug=${poll}`) // TODO: fix temp
+      .then(res => dispatch(addSelectedPoll(res.data.poll)));
+  };
+}
+
 export function addPolls(polls) {
   return {
     type: types.ADD_POLLS,
@@ -44,5 +51,31 @@ export function fetchPolls() {
   return (dispatch) => {
     return axios.get('/getPolls')
       .then(res => dispatch(addPolls(res.data.polls)));
+  };
+}
+
+export function vote(pollId, optionId) {
+  return {
+    type: types.VOTE,
+    pollId,
+    optionId
+  };
+}
+
+export function voteRequest(pollId, optionId) {
+  return () => axios.post('/vote', {pollId, optionId});
+}
+
+export function deletePoll(poll) {
+  return {
+    type: types.DELETE_POLL,
+    poll,
+  };
+}
+
+export function deletePollRequest(poll) {
+  return (dispatch) => {
+    return axios.post('/deletePoll', {pollId: poll._id})
+      .then(() => dispatch(deletePoll(poll)));
   };
 }

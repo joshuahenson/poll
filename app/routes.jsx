@@ -6,6 +6,7 @@ import Polls from './containers/Polls';
 import About from './components/About';
 import Auth from './containers/Auth';
 import Dashboard from './containers/Dashboard';
+import PollDetail from './containers/PollDetail';
 
 /*
  * @param {Redux Store}
@@ -39,6 +40,7 @@ export default (store) => {
       <Route path="login" component={Auth} onEnter={redirectAuth} />
       <Route path="dashboard" component={Dashboard} onEnter={requireAuth} />
       <Route path="about" component={About} />
+      <Route path="/poll/:slug" component={PollDetail} />
     </Route>
   );
 };

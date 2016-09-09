@@ -48,6 +48,7 @@ export default (app) => {
     app.get('/getPolls', pollController.getPolls);
     app.get('/getPoll', pollController.getPoll);
     app.post('/addPoll', pollController.addPoll);
+    app.post('/vote', pollController.vote);
     app.delete('/deletePoll', pollController.deletePoll);
   } else {
     console.warn(unsupportedMessage('poll routes'));

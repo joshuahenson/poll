@@ -27,3 +27,6 @@ export const LOGOUT_ERROR_USER = 'LOGOUT_ERROR_USER';
 export const ADD_POLL = 'ADD_POLL';
 export const ADD_POLLS = 'ADD_POLLS';
 export const ADD_SELECTED_POLL = 'ADD_SELECTED_POLL';
+export const ADD_POLL_REQUEST = 'ADD_POLL_REQUEST';
+export const DELETE_POLL = 'DELETE_POLL';
+export const VOTE = 'VOTE';

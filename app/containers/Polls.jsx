@@ -1,16 +1,9 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
-import { addSelectedPoll, fetchPolls } from 'actions/polls';
+import { addSelectedPoll, fetchPolls } from '../actions/polls';
 
 class Polls extends Component {
-
-  //Data that needs to be called before rendering the component
-  //This is used for server side rending via the fetchComponentDataBeforeRender() method
-  static need = [  // eslint-disable-line
-    fetchPolls
-  ]
-
   render() {
     const { addSelectedPoll, polls } = this.props;
     return (
@@ -19,7 +12,7 @@ class Polls extends Component {
           <div className="col-sm-6 col-md-4 text-center" key={i}>
             <Link
               to={`/poll/${poll.slug}-${poll.cuid}`}
-              onClick={addSelectedPoll(poll)}
+              onClick={() => addSelectedPoll(poll)}
             >
               <div className=" panel">
                 <div className="panel-body" >
@@ -36,6 +29,12 @@ class Polls extends Component {
     );
   }
 }
+
+// Data that needs to be called before rendering the component
+// This is used for server side rending via the fetchComponentDataBeforeRender() method
+Polls.need = [
+  fetchPolls
+];
 
 Polls.propTypes = {
   polls: PropTypes.array,
