@@ -4,9 +4,6 @@ import { addPollRequest } from '../actions/polls';
 
 const validate = values => {
   const errors = {};
-  if (!values.name) {
-    errors.name = 'Required';
-  }
   if (!values.title) {
     errors.title = 'Required';
   }
@@ -24,23 +21,18 @@ class CreatePoll extends Component {
     this.submit = this.submit.bind(this);
   }
   submit() {
-    const { addPollRequest, fields: { name, title, options } } = this.props;
+    const { userName, fields: { title, options }, addPollRequest } = this.props;
     const poll = {
-      name: name.value,
+      name: userName,
       title: title.value,
       options: options.value.split(',').map(optionI => ({ option: optionI.trim() }))
     };
     addPollRequest(poll);
   }
   render() {
-    const { fields: { name, title, options }, handleSubmit } = this.props; // reduxForm props
+    const { fields: { title, options }, handleSubmit } = this.props; // reduxForm props
     return (
       <form onSubmit={handleSubmit(this.submit)}>
-        <div className={`form-group ${name.touched && name.error ? 'has-error' : ''}`}>
-          <label htmlFor="nameInput" className="control-label">Name later replaced by login</label>
-          <input id="nameInput" type="text" className="form-control" placeholder="Fiona Staples"{...name} />
-          {name.touched && name.error && <div className="help-block">{name.error}</div>}
-        </div>
         <div className={`form-group ${title.touched && title.error ? 'has-error' : ''}`}>
           <label htmlFor="titleInput" className="control-label">Poll Title</label>
           <input id="titleInput" type="text" className="form-control" placeholder="Favorite Character"{...title} />
@@ -60,13 +52,20 @@ class CreatePoll extends Component {
 }
 
 CreatePoll.propTypes = {
+  userName: PropTypes.string,
   addPollRequest: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func,
   fields: PropTypes.object
 };
 
+function mapStateToProps(state) {
+  return {
+    userName: state.user.userName
+  };
+}
+
 export default reduxForm({
   form: 'addPoll',
-  fields: ['name', 'title', 'options'],
+  fields: ['title', 'options'],
   validate
-}, null, { addPollRequest })(CreatePoll);
+}, mapStateToProps, { addPollRequest })(CreatePoll);
