@@ -1,10 +1,7 @@
 import React, { PropTypes } from 'react';
-import Navigation from 'containers/Navigation';
-import Message from 'containers/Message';
-import classNames from 'classnames/bind';
-import styles from 'css/main';
-
-const cx = classNames.bind(styles);
+import Helmet from 'react-helmet';
+import Navigation from './Navigation';
+import Message from './Message';
 
 
 /*
@@ -18,7 +15,11 @@ const cx = classNames.bind(styles);
  */
 const App = ({children}) => {
   return (
-    <div className={cx('app')}>
+    <div>
+      <Helmet
+        title="Pollster"
+        titleTemplate="%s - Universal React Example"
+      />
       <Navigation />
       <Message />
         {children}

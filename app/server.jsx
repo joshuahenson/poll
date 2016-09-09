@@ -1,12 +1,12 @@
 import axios from 'axios';
 import React from 'react';
+import Helmet from 'react-helmet';
 import { renderToString } from 'react-dom/server';
 import { createMemoryHistory, match, RouterContext } from 'react-router';
 import { Provider } from 'react-redux';
 import createRoutes from './routes';
 import configureStore from './store/configureStore';
 import preRenderMiddleware from './middlewares/preRenderMiddleware';
-import header from './components/Meta';
 
 const clientConfig = {
   host: process.env.HOSTNAME || 'localhost',
@@ -84,6 +84,7 @@ export default function render(req, res) {
    * If all three parameters are `undefined`, this means that there was no route found matching the
    * given location.
    */
+  const head = Helmet.rewind();
   match({routes, location: req.url}, (err, redirect, props) => {
     if (err) {
       res.status(500).json(err);
@@ -107,11 +108,16 @@ export default function render(req, res) {
 
         res.status(200).send(`
           <!doctype html>
-          <html ${header.htmlAttributes.toString()}>
+          <html>
             <head>
-              ${header.title.toString()}
-              ${header.meta.toString()}
-              ${header.link.toString()}
+              <meta charset="utf-8">
+              <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+              ${head.title.toString()}
+              <meta name="description" content="">
+              <meta name="viewport" content="width=device-width, initial-scale=1">
+              <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/slate/bootstrap.min.css" rel="stylesheet" integrity="sha384-X9JiR5BtXUXiV6R3XuMyVGefFyy+18PHpBwaMfteb/vd2RrK6Gt4KPenkQyWLxCC" crossorigin="anonymous">
+              <link href="/assets/styles/style.css" rel="stylesheet">
+              <link rel="shortcut icon" href="http://res.cloudinary.com/henson/image/upload/v1464461170/favicon_kpdqcs.png" type="image/png" />
             </head>
             <body>
               <div id="app" class="container">${componentHTML}</div>

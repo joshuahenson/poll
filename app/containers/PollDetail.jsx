@@ -1,4 +1,5 @@
 import React, { Component, PropTypes } from 'react';
+import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { VictoryPie } from 'victory';
 import { Button } from 'react-bootstrap';
@@ -41,6 +42,7 @@ class PollDetail extends Component {
           </div>
         </div>
         <div className="row">
+          <Helmet title={this.props.poll.title} />
           <div className="col-sm-6">
             <div className="well">
               <form>
