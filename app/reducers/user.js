@@ -72,7 +72,7 @@ const authenticated = (
   }
 };
 
-const userObj = (
+const userName = (
   state = null,
   action
 ) => {
@@ -90,7 +90,7 @@ const userObj = (
 const userReducer = combineReducers({
   isLogin,
   isWaiting,
-  userObj,
+  userName,
   authenticated,
   message
 });
