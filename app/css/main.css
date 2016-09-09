@@ -1,0 +1,50 @@
+html {
+  position: relative;
+  min-height: 100%;
+}
+
+body {
+  margin-bottom: 30px;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  height: 30px;
+}
+
+a svg {
+  vertical-align: middle;
+}
+
+.radio input {
+  display: none;
+}
+
+.radio input ~ .glyphicon.glyphicon-check {
+  display: none;
+  margin-right: 5px;
+}
+
+.radio input:checked ~ .glyphicon.glyphicon-check {
+  display: inline;
+  margin-right: 5px;
+}
+
+.radio input ~ .glyphicon.glyphicon-unchecked {
+  display: inline;
+  margin-right: 5px;
+}
+
+.radio input:checked ~ .glyphicon.glyphicon-unchecked {
+  display: none;
+  margin-right: 5px;
+}
+
+.p-b {
+  padding-bottom: 20px;
+}
+
+ul {
+  list-style-type: square;
+}

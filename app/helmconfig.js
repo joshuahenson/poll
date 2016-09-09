@@ -15,7 +15,8 @@ import favicon from './images/favicon.png';
 const config = {
   link: [
     { rel: 'icon', href: favicon },
-    { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/slate/bootstrap.min.css' }
+    { rel: 'stylesheet', href: 'https://maxcdn.bootstrapcdn.com/bootswatch/3.3.6/slate/bootstrap.min.css' },
+    { rel: 'stylesheet', href: '/assets/styles/style.css' }
   ],
   meta: [
     { charset: 'utf-8' },
