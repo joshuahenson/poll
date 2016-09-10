@@ -22,6 +22,7 @@ export function addPoll(req, res) {
   // Let's sanitize inputs
   newPoll.title = sanitizeHtml(newPoll.title);
   newPoll.name = sanitizeHtml(newPoll.name);
+  newPoll.userId = sanitizeHtml(newPoll.userId);
   newPoll.options.forEach((obj) => {
     const rObj = {};
     rObj.option = sanitizeHtml(obj.option);

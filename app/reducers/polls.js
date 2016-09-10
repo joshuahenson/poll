@@ -5,6 +5,7 @@ const polls = (state = [], action) => {
     case types.ADD_POLL :
       return [{
         name: action.name,
+        userId: action.userId,
         title: action.title,
         options: action.options,
         slug: action.slug,

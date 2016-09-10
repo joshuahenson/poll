@@ -8,11 +8,12 @@ export function addPoll(poll) {
   return {
     type: types.ADD_POLL,
     name: poll.name,
+    userId: poll.userId,
     title: poll.title,
     options: poll.options,
     slug: poll.slug,
     cuid: poll.cuid,
-    _id: poll._id,
+    _id: poll._id
   };
 }
 

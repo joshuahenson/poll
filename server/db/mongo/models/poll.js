@@ -12,6 +12,7 @@ const pollOptionSchema = new Schema({
 
 const pollSchema = new Schema({
   name: String,
+  userId: String,
   title: String,
   slug: String,
   cuid: String,

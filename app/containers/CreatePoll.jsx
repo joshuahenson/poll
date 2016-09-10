@@ -21,9 +21,10 @@ class CreatePoll extends Component {
     this.submit = this.submit.bind(this);
   }
   submit() {
-    const { userName, fields: { title, options }, addPollRequest } = this.props;
+    const { userName, userId, fields: { title, options }, addPollRequest } = this.props;
     const poll = {
       name: userName,
+      userId,
       title: title.value,
       options: options.value.split(',').map(optionI => ({ option: optionI.trim() }))
     };
@@ -53,6 +54,7 @@ class CreatePoll extends Component {
 
 CreatePoll.propTypes = {
   userName: PropTypes.string,
+  userId: PropTypes.string,
   addPollRequest: PropTypes.func.isRequired,
   handleSubmit: PropTypes.func,
   fields: PropTypes.object
@@ -60,7 +62,8 @@ CreatePoll.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    userName: state.user.userName
+    userName: state.user.userName,
+    userId: state.user.userId
   };
 }
 
