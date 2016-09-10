@@ -114,6 +114,7 @@ PollDetail.need = [(params) => getPollRequest.bind(null, params.slug)()];
 PollDetail.propTypes = {
   poll: PropTypes.object,
   getPollRequest: PropTypes.func,
+  deletePollRequest: PropTypes.func,
   vote: PropTypes.func,
   voteRequest: PropTypes.func
 };
