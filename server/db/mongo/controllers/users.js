@@ -16,7 +16,8 @@ export function login(req, res, next) {
     return req.logIn(user, (loginErr) => {
       if (loginErr) return res.status(401).json({ message: loginErr });
       return res.status(200).json({
-        user: req.user.profile.name,
+        userName: req.user.profile.name,
+        userId: req.user._id,
         message: 'You have been successfully logged in.'
       });
     });
@@ -27,7 +28,6 @@ export function login(req, res, next) {
  * POST /logout
  */
 export function logout(req, res) {
-  // Do email and password validation for the server
   req.logout();
   res.redirect('/');
 }
@@ -55,7 +55,8 @@ export function signUp(req, res, next) {
       return req.logIn(user, (loginErr) => {
         if (loginErr) return res.status(401).json({ message: loginErr });
         return res.status(200).json({
-          user: req.user,
+          userName: req.user.profile.name,
+          userId: req.user._id,
           message: 'You have been successfully logged in.'
         });
       });

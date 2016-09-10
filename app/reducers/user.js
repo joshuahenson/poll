@@ -81,7 +81,22 @@ const userName = (
       return null;
     case types.LOGIN_SUCCESS_USER:
     case types.SIGNUP_SUCCESS_USER:
-      return action.user;
+      return action.userName;
+    default:
+      return state;
+  }
+};
+
+const userId = (
+  state = null,
+  action
+) => {
+  switch (action.type) {
+    case types.LOGOUT_SUCCESS_USER:
+      return null;
+    case types.LOGIN_SUCCESS_USER:
+    case types.SIGNUP_SUCCESS_USER:
+      return action.userId;
     default:
       return state;
   }
@@ -91,6 +106,7 @@ const userReducer = combineReducers({
   isLogin,
   isWaiting,
   userName,
+  userId,
   authenticated,
   message
 });

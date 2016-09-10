@@ -26,11 +26,11 @@ export function beginLogin() {
   return { type: types.MANUAL_LOGIN_USER };
 }
 
-export function loginSuccess(message, user) {
+export function loginSuccess(message, userName, userId) {
   return {
     type: types.LOGIN_SUCCESS_USER,
     message,
-    user
+    userName, userId
   };
 }
 
@@ -53,11 +53,11 @@ export function beginSignUp() {
   return { type: types.SIGNUP_USER };
 }
 
-export function signUpSuccess(message, user) {
+export function signUpSuccess(message, userName, userId) {
   return {
     type: types.SIGNUP_SUCCESS_USER,
     message,
-    user
+    userName, userId
   };
 }
 
@@ -85,7 +85,7 @@ export function manualLogin(data) {
     return makeUserRequest('post', data, '/login')
       .then(response => {
         if (response.status === 200) {
-          dispatch(loginSuccess(response.data.message, response.data.user));
+          dispatch(loginSuccess(response.data.message, response.data.userName, response.data.userId));
           dispatch(push('/dashboard'));
         } else {
           dispatch(loginError('Oops! Something went wrong!'));
@@ -104,7 +104,7 @@ export function signUp(data) {
     return makeUserRequest('post', data, '/signup')
       .then(response => {
         if (response.status === 200) {
-          dispatch(signUpSuccess(response.data.message, response.data.user));
+          dispatch(signUpSuccess(response.data.message, response.data.userName, response.data.userId));
           dispatch(push('/dashboard'));
         } else {
           dispatch(signUpError('Oops! Something went wrong'));
