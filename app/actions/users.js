@@ -1,5 +1,5 @@
 import { polyfill } from 'es6-promise';
-import request from 'axios';
+import axios from 'axios';
 import { push } from 'react-router-redux';
 
 import * as types from '../types';
@@ -7,19 +7,6 @@ import * as types from '../types';
 polyfill();
 
 const getMessage = res => res.response && res.response.data && res.response.data.message;
-/*
- * Utility function to make AJAX requests using isomorphic fetch.
- * You can also use jquery's $.ajax({}) if you do not want to use the
- * /fetch API.
- * @param Object Data you wish to pass to the server
- * @param String HTTP method, e.g. post, get, put, delete
- * @param String endpoint - defaults to /login
- * @return Promise
- */
-function makeUserRequest(method, data, api = '/login') {
-  return request[method](api, data);
-}
-
 
 // Log In Action Creators
 export function beginLogin() {
@@ -30,7 +17,8 @@ export function loginSuccess(message, userName, userId) {
   return {
     type: types.LOGIN_SUCCESS_USER,
     message,
-    userName, userId
+    userName,
+    userId
   };
 }
 
@@ -57,7 +45,8 @@ export function signUpSuccess(message, userName, userId) {
   return {
     type: types.SIGNUP_SUCCESS_USER,
     message,
-    userName, userId
+    userName,
+    userId
   };
 }
 
@@ -78,11 +67,25 @@ export function toggleLoginMode() {
   return { type: types.TOGGLE_LOGIN_MODE };
 }
 
+export function addUserPolls(polls) {
+  return {
+    type: types.ADD_USER_POLLS,
+    polls
+  };
+}
+
+export function getUserPollsRequest(userId) {
+  return dispatch => {
+    return axios.get(`/getUserPolls?ID=${userId}`)
+      .then(response => dispatch(addUserPolls(response.data.polls)));
+  };
+}
+
 export function manualLogin(data) {
   return dispatch => {
     dispatch(beginLogin());
 
-    return makeUserRequest('post', data, '/login')
+    return axios.post('/login', data)
       .then(response => {
         if (response.status === 200) {
           dispatch(loginSuccess(response.data.message, response.data.userName, response.data.userId));
@@ -101,7 +104,7 @@ export function signUp(data) {
   return dispatch => {
     dispatch(beginSignUp());
 
-    return makeUserRequest('post', data, '/signup')
+    return axios.post('/signup', data)
       .then(response => {
         if (response.status === 200) {
           dispatch(signUpSuccess(response.data.message, response.data.userName, response.data.userId));
@@ -120,7 +123,7 @@ export function logOut() {
   return dispatch => {
     dispatch(beginLogout());
 
-    return makeUserRequest('post', null, '/logout')
+    return axios.post('/logout')
       .then(response => {
         if (response.status === 200) {
           dispatch(logoutSuccess());

@@ -12,6 +12,15 @@ export function getPolls(req, res) {
   });
 }
 
+export function getUserPolls(req, res) {
+  Poll.find({userId: req.query.ID}).sort('-dateAdded').exec((err, polls) => {
+    if (err) {
+      res.status(500).send(err);
+    }
+    res.json({ polls });
+  });
+}
+
 export function addPoll(req, res) {
   if (!req.body.name || !req.body.title) {
     res.status(403).end();
@@ -80,6 +89,7 @@ export function vote(req, res) {
 
 export default {
   getPolls,
+  getUserPolls,
   addPoll,
   getPoll,
   deletePoll,

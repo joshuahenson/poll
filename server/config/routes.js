@@ -46,6 +46,7 @@ export default (app) => {
   // poll routes
   if (pollController) {
     app.get('/getPolls', pollController.getPolls);
+    app.get('/getUserPolls', pollController.getUserPolls);
     app.get('/getPoll', pollController.getPoll);
     app.post('/addPoll', pollController.addPoll);
     app.post('/vote', pollController.vote);

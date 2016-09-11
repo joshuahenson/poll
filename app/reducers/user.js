@@ -102,11 +102,28 @@ const userId = (
   }
 };
 
+const userPolls = (
+  state = [],
+  action
+) => {
+  switch (action.type) {
+    case types.ADD_USER_POLLS :
+      return action.polls;
+
+    case types.LOGOUT_SUCCESS_USER:
+      return [];
+
+    default:
+      return state;
+  }
+};
+
 const userReducer = combineReducers({
   isLogin,
   isWaiting,
   userName,
   userId,
+  userPolls,
   authenticated,
   message
 });
