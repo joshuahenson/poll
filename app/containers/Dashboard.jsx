@@ -1,8 +1,9 @@
 import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Button } from 'react-bootstrap';
+import { Button, ButtonToolbar, Accordion, Panel } from 'react-bootstrap';
 import { getUserPollsRequest } from '../actions/users';
+import AlertDelete from '../components/AlertDelete';
 
 
 class Dashboard extends Component {
@@ -10,16 +11,36 @@ class Dashboard extends Component {
     this.props.getUserPollsRequest(this.props.userId);
   }
   render() {
-    // TODO: update userPolls.map placeholder
     return (
       <div className="row">
         <div className="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
           <LinkContainer to="/create_poll">
-            <Button block>Create a poll</Button>
+            <Button bsSize="large" block>Create a poll</Button>
           </LinkContainer>
-          <div>
-            {this.props.userPolls.map((poll, index) => <p key={index}>{poll.title}</p>)}
-          </div>
+          <hr />
+          <Accordion>
+            {this.props.userPolls.map((poll, index) =>
+              <Panel header={poll.title} eventKey={index} key={index}>
+                <table className="table table-hover">
+                  <thead>
+                    <tr>
+                      <th>Poll Options</th>
+                      <th>Votes</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {poll.options.map((option, index) =>
+                      <tr key={index}>
+                        <td>{option.option}</td>
+                        <td>{option.votes}</td>
+                      </tr>
+                    )}
+                  </tbody>
+                </table>
+                <AlertDelete />
+              </Panel>
+            )}
+          </Accordion>
         </div>
       </div>
     );
