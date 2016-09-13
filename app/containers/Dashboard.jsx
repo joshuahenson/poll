@@ -1,10 +1,10 @@
 import React, {Component, PropTypes} from 'react';
 import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
-import { Button, ButtonToolbar, Accordion, Panel } from 'react-bootstrap';
+import { Button, Accordion, Panel } from 'react-bootstrap';
 import { getUserPollsRequest } from '../actions/users';
-import AlertDelete from '../components/AlertDelete';
-
+import { } from '../actions/polls';
+import ViewDeletePoll from '../containers/ViewDeletePoll';
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -15,7 +15,7 @@ class Dashboard extends Component {
       <div className="row">
         <div className="col-sm-10 col-sm-offset-1 col-md-8 col-md-offset-2 col-lg-6 col-lg-offset-3">
           <LinkContainer to="/create_poll">
-            <Button bsSize="large" block>Create a poll</Button>
+            <Button bsSize="large" bsStyle="primary" block>Create a poll</Button>
           </LinkContainer>
           <hr />
           <Accordion>
@@ -37,7 +37,7 @@ class Dashboard extends Component {
                     )}
                   </tbody>
                 </table>
-                <AlertDelete />
+                <ViewDeletePoll poll={poll} />
               </Panel>
             )}
           </Accordion>

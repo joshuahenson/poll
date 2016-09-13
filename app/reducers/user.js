@@ -113,6 +113,9 @@ const userPolls = (
     case types.LOGOUT_SUCCESS_USER:
       return [];
 
+    case types.DELETE_POLL :
+      return state.filter((poll) => poll._id !== action.poll._id);
+
     default:
       return state;
   }
