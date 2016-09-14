@@ -14,11 +14,9 @@ const updateOptions = (state, action) => {
   }
 };
 
-const poll = (state = null, action) => {
+// Needs some basic info to keep from showing error when pushing to newly created poll
+const poll = (state = {options: [{option: '', votes: 0}]}, action) => {
   switch (action.type) {
-    case types.CHANGE_SELECTED_POLL :
-      return action.slug;
-
     case types.ADD_SELECTED_POLL :
       return action.poll;
 
