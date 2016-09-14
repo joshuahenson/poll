@@ -118,6 +118,7 @@ export default function render(req, res) {
               <meta name="description" content="">
               <meta name="viewport" content="width=device-width, initial-scale=1">
               <link href="https://maxcdn.bootstrapcdn.com/bootswatch/3.3.7/readable/bootstrap.min.css" rel="stylesheet">
+              <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.6.3/css/font-awesome.min.css" rel="stylesheet">
               <link href="/assets/styles/style.css" rel="stylesheet">
               <link rel="shortcut icon" href="http://res.cloudinary.com/henson/image/upload/v1464461170/favicon_kpdqcs.png" type="image/png" />
             </head>
