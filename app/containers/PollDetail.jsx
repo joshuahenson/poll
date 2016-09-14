@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { VictoryPie } from 'victory';
-import { Button } from 'react-bootstrap';
+import { Button, Glyphicon } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { getPollRequest, vote, voteRequest, deletePollRequest } from '../actions/polls';
 
@@ -67,14 +67,24 @@ class PollDetail extends Component {
                   Vote
                 </Button>
               </form>
-            </div>
-            <div>
-              <p>Current Results:</p>
-              <ul>
-              {this.props.poll.options.map((obj, i) =>
-                <li key={i} style={{ color: colorScale[i] }}>{obj.option}: {obj.votes}</li>
-              )}
-              </ul>
+              <hr />
+              <h5>Current Results</h5>
+              <table className="table">
+                <thead>
+                  <tr>
+                    <th>Poll Options</th>
+                    <th>Votes</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {this.props.poll.options.map((option, index) =>
+                    <tr key={index} style={{ backgroundColor: colorScale[index]}}>
+                      <td>{option.option}</td>
+                      <td>{option.votes}</td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
             </div>
           </div>
           <div className="col-sm-6">
@@ -82,7 +92,6 @@ class PollDetail extends Component {
               data={pieData}
               style={{
                 labels: {
-                  fill: 'white',
                   opacity: data => (data.y === 0 ? 0 : 1)
                 },
                 data: {
