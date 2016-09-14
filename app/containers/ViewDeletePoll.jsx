@@ -21,6 +21,7 @@ class AlertDelete extends Component {
   delete() {
     // TODO: Consider optimistic update of poll removal from redux first
     this.props.deletePollRequest(this.props.poll);
+    this.setState({alertVisible: false});
   }
   render() {
     if (this.state.alertVisible) {
