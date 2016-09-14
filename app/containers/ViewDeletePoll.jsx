@@ -44,7 +44,7 @@ class AlertDelete extends Component {
         <LinkContainer to={`/poll/${this.props.poll.slug}-${this.props.poll.cuid}`}>
           <Button
             bsSize="small"
-            bsStyle="info"
+            bsStyle="primary"
             onClick={() => this.props.addSelectedPoll(this.props.poll)}>View Poll</Button>
         </LinkContainer>
         <Button bsSize="small" bsStyle="danger" onClick={this.setAlert}>Delete</Button>
