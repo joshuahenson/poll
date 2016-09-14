@@ -2,9 +2,9 @@ import React, { Component, PropTypes } from 'react';
 import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { VictoryPie } from 'victory';
-import { Button, Glyphicon } from 'react-bootstrap';
-import { LinkContainer } from 'react-router-bootstrap';
+import { Button } from 'react-bootstrap';
 import { getPollRequest, vote, voteRequest, deletePollRequest } from '../actions/polls';
+import DeletePoll from './DeletePoll';
 
 class PollDetail extends Component {
   constructor(props) {
@@ -31,7 +31,6 @@ class PollDetail extends Component {
     ));
     const colorScale = ['#75C776', '#39B6C5', '#78CCC4',
       '#62C3A4', '#64A8D1', '#8C95C8', '#3BAF74'];
-    // TODO: move delete to dashboard or provide other conditional before showing
     // TODO: 8th item will put two colors next to one another
     // TODO: 8th item will not have color on checkboxes/current results
     return (
@@ -86,6 +85,7 @@ class PollDetail extends Component {
                 </tbody>
               </table>
             </div>
+            <DeletePoll />
           </div>
           <div className="col-sm-6">
             <VictoryPie
@@ -104,14 +104,6 @@ class PollDetail extends Component {
               colorScale={colorScale}
             />
           </div>
-          <LinkContainer to="/">
-            <Button
-              bsSize="small" bsStyle="danger"
-              onClick={() => this.props.deletePollRequest(this.props.poll)}
-            >
-              Delete
-            </Button>
-          </LinkContainer>
         </div>
       </div>
     );
