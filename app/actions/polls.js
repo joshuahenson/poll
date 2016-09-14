@@ -1,5 +1,6 @@
 import { polyfill } from 'es6-promise';
 import axios from 'axios';
+import { push } from 'react-router-redux';
 import * as types from '../types';
 
 polyfill();
@@ -23,7 +24,10 @@ export function addPollRequest(poll) {
     // TODO: First dispatch an optimistic update?
     // TODO: add catch
     return axios.post('/addPoll', poll)
-    .then(res => dispatch(addPoll(res.data)));
+    .then(res => {
+      dispatch(addPoll(res.data));
+      dispatch(push(`/poll/${res.data.slug}-${res.data.cuid}`));
+    });
   };
 }
 
