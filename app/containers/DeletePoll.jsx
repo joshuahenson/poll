@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Alert, Button, ButtonToolbar } from 'react-bootstrap';
 import { LinkContainer } from 'react-router-bootstrap';
 import { deletePollRequest } from '../actions/polls';
+import Tweet from '../components/Tweet';
 
 class AlertDelete extends Component {
   constructor(props) {
@@ -44,10 +45,13 @@ class AlertDelete extends Component {
       );
     } else if (user.userId === poll.userId) {
       return (
-        <Button bsSize="small" bsStyle="danger" onClick={this.setAlert}>Delete</Button>
+        <ButtonToolbar>
+          <Tweet />
+          <Button bsStyle="danger" onClick={this.setAlert}>Delete Poll</Button>
+        </ButtonToolbar>
       );
     }
-    return null;
+    return <Tweet />;
   }
 }
 
