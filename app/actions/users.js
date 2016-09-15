@@ -1,6 +1,7 @@
 import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import { push } from 'react-router-redux';
+import { dismissMessage } from './messages';
 
 import * as types from '../types';
 
@@ -89,6 +90,9 @@ export function manualLogin(data) {
       .then(response => {
         if (response.status === 200) {
           dispatch(loginSuccess(response.data.message, response.data.userName, response.data.userId));
+          setTimeout(() => {
+            dispatch(dismissMessage());
+          }, 5000);
           dispatch(push('/dashboard'));
         } else {
           dispatch(loginError('Oops! Something went wrong!'));
@@ -108,6 +112,9 @@ export function signUp(data) {
       .then(response => {
         if (response.status === 200) {
           dispatch(signUpSuccess(response.data.message, response.data.userName, response.data.userId));
+          setTimeout(() => {
+            dispatch(dismissMessage());
+          }, 5000);
           dispatch(push('/dashboard'));
         } else {
           dispatch(signUpError('Oops! Something went wrong'));
