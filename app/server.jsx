@@ -59,7 +59,6 @@ export default function render(req, res) {
       userName: req.user ? req.user.profile.name : null,
       userId: req.user ? req.user._id : null,
       userPolls: [],
-      message: '',
       isLogin: true
     }
   }, history);
