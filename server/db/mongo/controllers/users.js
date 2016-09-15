@@ -1,4 +1,5 @@
 import passport from 'passport';
+import sanitizeHtml from 'sanitize-html';
 import User from '../models/user';
 
 /**
@@ -37,15 +38,18 @@ export function logout(req, res) {
  * Create a new local account
  */
 export function signUp(req, res, next) {
+  const email = sanitizeHtml(req.body.email);
+  const password = sanitizeHtml(req.body.password);
+  const name = sanitizeHtml(req.body.name);
   const user = new User({
-    email: req.body.email,
-    password: req.body.password,
+    email,
+    password,
     profile: {
-      name: req.body.name
+      name
     }
   });
 
-  User.findOne({ email: req.body.email }, (findErr, existingUser) => {
+  User.findOne({ email }, (findErr, existingUser) => {
     if (existingUser) {
       return res.status(409).json({ message: 'Account with this email address already exists!' });
     }
