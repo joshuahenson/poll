@@ -1,13 +1,14 @@
 import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import { push } from 'react-router-redux';
+import { startSubmit, stopSubmit } from 'redux-form';
 import { dismissMessage } from './messages';
 
 import * as types from '../types';
 
 polyfill();
 
-const getMessage = res => res.response && res.response.data && res.response.data.message;
+const getMessage = res => res.response.data.message;
 
 // Log In Action Creators
 export function beginLogin() {
@@ -82,24 +83,23 @@ export function getUserPollsRequest(userId) {
   };
 }
 
-export function manualLogin(data) {
+export function manualLogin(data, form) {
   return dispatch => {
-    dispatch(beginLogin());
+    dispatch(startSubmit(form));
 
     return axios.post('/login', data)
       .then(response => {
-        if (response.status === 200) {
-          dispatch(loginSuccess(response.data.message, response.data.userName, response.data.userId));
-          setTimeout(() => {
-            dispatch(dismissMessage());
-          }, 5000);
-          dispatch(push('/dashboard'));
-        } else {
-          dispatch(loginError('Oops! Something went wrong!'));
-        }
+        dispatch(loginSuccess(response.data.message, response.data.userName, response.data.userId));
+        setTimeout(() => {
+          dispatch(dismissMessage());
+        }, 5000);
+        dispatch(push('/dashboard'));
+        dispatch(stopSubmit(form, {}));
       })
       .catch(err => {
-        dispatch(loginError(getMessage(err)));
+        // TODO: decide if I want to dispatch error message or use with stopSubmit
+        // dispatch(loginError(getMessage(err)));
+        dispatch(stopSubmit(form, {_error: getMessage(err)}));
       });
   };
 }
