@@ -47,9 +47,9 @@ class PollDetail extends Component {
               <form>
                 {this.props.poll.options.map((obj, i) =>
                   <div className="radio" key={i}>
-                    <label>
+                    <label htmlFor={`option${i}`}>
                       <input
-                        type="radio" name="option" onChange={this.radioClick} value={obj._id}
+                        type="radio" name="option" id={`option${i}`} onChange={this.radioClick} value={obj._id}
                       />
                       <span className="glyphicon glyphicon-unchecked" aria-hidden="true" />
                       <span

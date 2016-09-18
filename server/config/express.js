@@ -5,11 +5,11 @@ import bodyParser from 'body-parser';
 import path from 'path';
 import flash from 'express-flash';
 import methodOverride from 'method-override';
+import gzip from 'compression';
 import unsupportedMessage from '../db/unsupportedMessage';
 import { sessionSecret } from './secrets';
 import { DB_TYPE, ENV } from './appConfig';
 import { session as dbSession } from '../db';
-import gzip from 'compression';
 
 
 export default (app) => {
@@ -34,7 +34,7 @@ export default (app) => {
   // I am adding this here so that the Heroku deploy will work
   // Indicates the app is behind a front-facing proxy,
   // and to use the X-Forwarded-* headers to determine the connection and the IP address of the client.
-  // NOTE: X-Forwarded-* headers are easily spoofed and the detected IP addresses are unreliable.
+  // note: X-Forwarded-* headers are easily spoofed and the detected IP addresses are unreliable.
   // trust proxy is disabled by default.
   // When enabled, Express attempts to determine the IP address of the client connected through the front-facing proxy, or series of proxies.
   // The req.ips property, then, contains an array of IP addresses the client is connected through.
