@@ -16,6 +16,7 @@ const pollSchema = new Schema({
   title: String,
   slug: String,
   cuid: String,
+  ipVotes: [String],
   dateAdded: { type: Date, default: Date.now, required: true },
   options: [pollOptionSchema]
 });

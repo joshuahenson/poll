@@ -76,15 +76,21 @@ export function deletePoll(req, res) {
 export function vote(req, res) {
   const pollId = req.body.pollId;
   const optionId = req.body.optionId;
-  Poll.update(
-    { _id: pollId, 'options._id': optionId },
-    { $inc: { 'options.$.votes': 1 } })
-    .exec((err) => {
+  const userIp = req.ip;
+  Poll.findById(pollId, (err, poll) => {
+    if (err) {
+      console.log(err);
+    }
+    const option = poll.options.id(optionId);
+    option.votes += 1;
+    poll.ipVotes.push(userIp);
+    poll.save((err) => {
       if (err) {
         res.status(500).send(err);
       }
       res.status(200).end();
     });
+  });
 }
 
 export default {
