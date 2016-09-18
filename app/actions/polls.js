@@ -1,9 +1,17 @@
 import { polyfill } from 'es6-promise';
 import axios from 'axios';
 import { push } from 'react-router-redux';
+import { dismissMessage } from './messages';
 import * as types from '../types';
 
 polyfill();
+
+export function generalErrorMessage() {
+  return {
+    type: types.GENERAL_ERROR_MESSAGE,
+    message: 'Unfortunately, an error has occurred'
+  };
+}
 
 export function addPoll(poll) {
   return {
@@ -68,7 +76,19 @@ export function vote(pollId, optionId) {
 }
 
 export function voteRequest(pollId, optionId) {
-  return () => axios.post('/vote', {pollId, optionId});
+  return dispatch => {
+    // TODO: dispatch vote here
+    return axios.post('/vote', {pollId, optionId})
+      .then()
+      .catch(() => {
+        dispatch(generalErrorMessage());
+        // TODO: leave error message up?
+        setTimeout(() => {
+          dispatch(dismissMessage());
+        }, 5000);
+        // TODO: rollback vote
+      });
+  };
 }
 
 export function deletePoll(poll) {

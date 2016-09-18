@@ -17,6 +17,7 @@ export default function message(state = {
     case types.DISMISS_MESSAGE:
       return {...state, message: '', type: ''};
     case types.LOGOUT_ERROR_USER:
+    case types.GENERAL_ERROR_MESSAGE:
       return {...state, message: action.message, type: 'danger'};
     default:
       return state;
