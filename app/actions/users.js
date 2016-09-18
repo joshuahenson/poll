@@ -80,10 +80,31 @@ export function addUserPolls(polls) {
   };
 }
 
+export function userIsWaiting() {
+  return {
+    type: types.IS_WAITING
+  };
+}
+
+export function userIsNotWaiting() {
+  return {
+    type: types.IS_NOT_WAITING
+  };
+}
+
+
 export function getUserPollsRequest(userId) {
   return dispatch => {
-    return axios.get(`/getUserPolls?ID=${userId}`)
-      .then(response => dispatch(addUserPolls(response.data.polls)));
+    dispatch(userIsWaiting());
+    axios.get(`/getUserPolls?ID=${userId}`)
+      .then(response => {
+        dispatch(addUserPolls(response.data.polls));
+        dispatch(userIsNotWaiting());
+      })
+      .catch(err => {
+        console.log(getMessage(err));
+        dispatch(userIsNotWaiting());
+      });
   };
 }
 

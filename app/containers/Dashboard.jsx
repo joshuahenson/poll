@@ -3,8 +3,8 @@ import { connect } from 'react-redux';
 import { LinkContainer } from 'react-router-bootstrap';
 import { Button, Accordion, Panel } from 'react-bootstrap';
 import { getUserPollsRequest } from '../actions/users';
-import { } from '../actions/polls';
-import ViewDeletePoll from '../containers/ViewDeletePoll';
+import ViewDeletePoll from './ViewDeletePoll';
+import Spinner from '../components/Spinner';
 
 class Dashboard extends Component {
   componentDidMount() {
@@ -41,6 +41,7 @@ class Dashboard extends Component {
               </Panel>
             )}
           </Accordion>
+          {this.props.isWaiting ? <Spinner /> : null}
         </div>
       </div>
     );
@@ -50,13 +51,15 @@ class Dashboard extends Component {
 Dashboard.propTypes = {
   getUserPollsRequest: PropTypes.func.isRequired,
   userId: PropTypes.string,
-  userPolls: PropTypes.array
+  userPolls: PropTypes.array,
+  isWaiting: PropTypes.bool
 };
 
 function mapStateToProps(state) {
   return {
     userId: state.user.userId,
-    userPolls: state.user.userPolls
+    userPolls: state.user.userPolls,
+    isWaiting: state.user.isWaiting
   };
 }
 

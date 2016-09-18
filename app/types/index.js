@@ -12,6 +12,8 @@ export const LOGOUT_USER = 'LOGOUT_USER';
 export const LOGOUT_SUCCESS_USER = 'LOGOUT_SUCCESS_USER';
 export const LOGOUT_ERROR_USER = 'LOGOUT_ERROR_USER';
 export const ADD_USER_POLLS = 'ADD_USER_POLLS';
+export const IS_WAITING = 'IS_WAITING';
+export const IS_NOT_WAITING = 'IS_NOT_WAITING';
 
 export const ADD_POLL = 'ADD_POLL';
 export const ADD_POLLS = 'ADD_POLLS';
