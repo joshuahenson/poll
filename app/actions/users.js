@@ -107,32 +107,22 @@ export function manualLogin(data, form) {
       });
   };
 }
-//
-// export function googleLogin() {
-//   return dispatch => {
-//     dispatch(beginGoogleLogin());
-//     return axios.get('/auth/google');
-//   };
-// }
 
-export function signUp(data) {
+export function signUp(data, form) {
   return dispatch => {
-    dispatch(beginSignUp());
+    dispatch(startSubmit(form));
 
     return axios.post('/signup', data)
       .then(response => {
-        if (response.status === 200) {
-          dispatch(signUpSuccess(response.data.message, response.data.userName, response.data.userId));
-          setTimeout(() => {
-            dispatch(dismissMessage());
-          }, 5000);
-          dispatch(push('/dashboard'));
-        } else {
-          dispatch(signUpError('Oops! Something went wrong'));
-        }
+        dispatch(signUpSuccess(response.data.message, response.data.userName, response.data.userId));
+        setTimeout(() => {
+          dispatch(dismissMessage());
+        }, 5000);
+        dispatch(push('/dashboard'));
+        dispatch(stopSubmit(form, {}));
       })
       .catch(err => {
-        dispatch(signUpError(getMessage(err)));
+        dispatch(stopSubmit(form, {_error: getMessage(err)}));
       });
   };
 }

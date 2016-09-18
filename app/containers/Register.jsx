@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {reduxForm} from 'redux-form';
-import GoogleLogin from '../components/GoogleLogin';
+import GoogleLogin from '../containers/GoogleLogin';
 import {signUp, toggleLoginMode} from '../actions/users';
 
 const validate = values => {
@@ -30,11 +30,10 @@ class Register extends Component {
         name: name.value,
         email: email.value,
         password: password.value
-    });
+    }, 'register');
   }
-  // TODO: update submitting prop
   render() {
-    const { fields: { email, password, name }, resetForm, handleSubmit, submitting, toggleLoginMode } = this.props;
+    const { fields: { email, password, name }, error, resetForm, handleSubmit, submitting, toggleLoginMode } = this.props;
     return (
       <div>
         <div className="text-center">
@@ -69,8 +68,9 @@ class Register extends Component {
             {password.touched && password.error && <div className="col-sm-3 help-block">{password.error}</div>}
           </div>
           <div className="text-center">
+            {error && <p className="bg-danger">{error}</p>}
             <button type="submit" className="btn btn-primary btn-lg" style={{ margin: 10 }} disabled={submitting}>
-              {submitting ? 'Registering...' : 'Register'}
+              {submitting ? <i className="fa fa-circle-o-notch fa-spin" /> : <i className="fa fa-pencil-square-o" />} Register
             </button>
             <button type="button" className="btn btn-default btn-lg" style={{ margin: 10 }} disabled={submitting} onClick={resetForm}>
               Clear Values
@@ -88,7 +88,12 @@ Register.propTypes = {
   user: PropTypes.object,
   manualLogin: PropTypes.func.isRequired,
   signUp: PropTypes.func.isRequired,
-  toggleLoginMode: PropTypes.func.isRequired
+  toggleLoginMode: PropTypes.func.isRequired,
+  fields: PropTypes.object.isRequired,
+  handleSubmit: PropTypes.func.isRequired,
+  error: PropTypes.string,
+  resetForm: PropTypes.func.isRequired,
+  submitting: PropTypes.bool.isRequired
 };
 
 // Function passed in to `connect` to subscribe to Redux store updates.
@@ -98,7 +103,7 @@ function mapStateToProps({user}) {
 }
 
 const formConfig = {
-  form: 'login',
+  form: 'register',
   fields: [
     'email', 'password', 'name'
   ],
