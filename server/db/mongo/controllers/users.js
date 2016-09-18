@@ -19,7 +19,7 @@ export function login(req, res, next) {
       return res.status(200).json({
         userName: req.user.profile.name,
         userId: req.user._id,
-        message: 'You have been successfully logged in.'
+        message: `Welcome ${req.user.profile.name}. You have been logged in.`
       });
     });
   })(req, res, next);
@@ -61,7 +61,7 @@ export function signUp(req, res, next) {
         return res.status(200).json({
           userName: req.user.profile.name,
           userId: req.user._id,
-          message: 'You have been successfully logged in.'
+          message: `Welcome ${req.user.profile.name}. Your account has been created.`
         });
       });
     });
