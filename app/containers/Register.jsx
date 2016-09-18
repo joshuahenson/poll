@@ -86,7 +86,6 @@ class Register extends Component {
 
 Register.propTypes = {
   user: PropTypes.object,
-  manualLogin: PropTypes.func.isRequired,
   signUp: PropTypes.func.isRequired,
   toggleLoginMode: PropTypes.func.isRequired,
   fields: PropTypes.object.isRequired,
