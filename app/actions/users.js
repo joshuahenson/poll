@@ -11,10 +11,6 @@ polyfill();
 const getMessage = res => res.response.data.message;
 
 // Log In Action Creators
-export function beginLogin() {
-  return { type: types.MANUAL_LOGIN_USER };
-}
-
 export function googleLogin() {
   return { type: types.GOOGLE_LOGIN_USER };
 }
@@ -28,25 +24,7 @@ export function loginSuccess(message, userName, userId) {
   };
 }
 
-export function loginError(message) {
-  return {
-    type: types.LOGIN_ERROR_USER,
-    message
-  };
-}
-
 // Sign Up Action Creators
-export function signUpError(message) {
-  return {
-    type: types.SIGNUP_ERROR_USER,
-    message
-  };
-}
-
-export function beginSignUp() {
-  return { type: types.SIGNUP_USER };
-}
-
 export function signUpSuccess(message, userName, userId) {
   return {
     type: types.SIGNUP_SUCCESS_USER,
@@ -57,16 +35,15 @@ export function signUpSuccess(message, userName, userId) {
 }
 
 // Log Out Action Creators
-export function beginLogout() {
-  return { type: types.LOGOUT_USER};
-}
-
 export function logoutSuccess() {
   return { type: types.LOGOUT_SUCCESS_USER };
 }
 
 export function logoutError() {
-  return { type: types.LOGOUT_ERROR_USER };
+  return {
+    type: types.LOGOUT_ERROR_USER,
+    message: 'There was an error attempting to log out.'
+  };
 }
 
 export function toggleLoginMode() {
@@ -117,13 +94,11 @@ export function manualLogin(data, form) {
         dispatch(loginSuccess(response.data.message, response.data.userName, response.data.userId));
         setTimeout(() => {
           dispatch(dismissMessage());
-        }, 5000);
+        }, 3000);
         dispatch(push('/dashboard'));
         dispatch(stopSubmit(form, {}));
       })
       .catch(err => {
-        // TODO: decide if I want to dispatch error message or use with stopSubmit
-        // dispatch(loginError(getMessage(err)));
         dispatch(stopSubmit(form, {_error: getMessage(err)}));
       });
   };
@@ -138,7 +113,7 @@ export function signUp(data, form) {
         dispatch(signUpSuccess(response.data.message, response.data.userName, response.data.userId));
         setTimeout(() => {
           dispatch(dismissMessage());
-        }, 5000);
+        }, 3000);
         dispatch(push('/dashboard'));
         dispatch(stopSubmit(form, {}));
       })
@@ -150,15 +125,12 @@ export function signUp(data, form) {
 
 export function logOut() {
   return dispatch => {
-    dispatch(beginLogout());
-
     return axios.post('/logout')
-      .then(response => {
-        if (response.status === 200) {
-          dispatch(logoutSuccess());
-        } else {
-          dispatch(logoutError());
-        }
+      .then(() => {
+        dispatch(logoutSuccess());
+      })
+      .catch(() => {
+        dispatch(logoutError());
       });
   };
 }

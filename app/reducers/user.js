@@ -8,6 +8,8 @@ const isLogin = (
   switch (action.type) {
     case types.TOGGLE_LOGIN_MODE:
       return !state;
+    case types.SIGNUP_SUCCESS_USER:
+      return false;
     default:
       return state;
   }
@@ -36,8 +38,6 @@ const authenticated = (
     case types.SIGNUP_SUCCESS_USER:
     case types.LOGOUT_ERROR_USER:
       return true;
-    case types.LOGIN_ERROR_USER:
-    case types.SIGNUP_ERROR_USER:
     case types.LOGOUT_SUCCESS_USER:
       return false;
     default:
@@ -102,7 +102,6 @@ const submittingGoogle = (
     case types.GOOGLE_LOGIN_USER:
       return true;
     case types.LOGIN_SUCCESS_USER:
-    case types.LOGIN_ERROR_USER:
       return false;
     default:
       return state;
