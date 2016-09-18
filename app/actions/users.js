@@ -15,6 +15,10 @@ export function beginLogin() {
   return { type: types.MANUAL_LOGIN_USER };
 }
 
+export function googleLogin() {
+  return { type: types.GOOGLE_LOGIN_USER };
+}
+
 export function loginSuccess(message, userName, userId) {
   return {
     type: types.LOGIN_SUCCESS_USER,
@@ -103,6 +107,13 @@ export function manualLogin(data, form) {
       });
   };
 }
+//
+// export function googleLogin() {
+//   return dispatch => {
+//     dispatch(beginGoogleLogin());
+//     return axios.get('/auth/google');
+//   };
+// }
 
 export function signUp(data) {
   return dispatch => {

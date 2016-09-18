@@ -1,6 +1,6 @@
 import React, {Component, PropTypes} from 'react';
 import {reduxForm} from 'redux-form';
-import GoogleLogin from '../components/GoogleLogin';
+import GoogleLogin from '../containers/GoogleLogin';
 import {manualLogin, toggleLoginMode} from '../actions/users';
 
 const validate = values => {
@@ -15,7 +15,6 @@ const validate = values => {
   }
   return errors;
 };
-  // TODO: update submitting prop
 class Login extends Component {
   constructor(props) {
     super(props);
@@ -61,7 +60,7 @@ class Login extends Component {
             <button type="submit" className="btn btn-primary btn-lg" style={{ margin: 10 }} disabled={submitting}>
               {submitting ? <i className="fa fa-circle-o-notch fa-spin" /> : <i className="fa fa-sign-in" />} Log In
             </button>
-            <button type="button" className="btn btn-default btn-lg" style={{ margin: 10 }} disabled={submitting} onClick={resetForm}>
+            <button type="reset" className="btn btn-default btn-lg" style={{ margin: 10 }} disabled={submitting} onClick={resetForm}>
               Clear Values
             </button>
           </div>
