@@ -28,13 +28,16 @@ export function addPoll(poll) {
 
 export function addPollRequest(poll) {
   return (dispatch) => {
-    // TODO: check for duplicates?
-    // TODO: First dispatch an optimistic update?
-    // TODO: add catch
     return axios.post('/addPoll', poll)
     .then(res => {
       dispatch(addPoll(res.data));
       dispatch(push(`/poll/${res.data.slug}-${res.data.cuid}`));
+    })
+    .catch(() => {
+      dispatch(generalErrorMessage());
+      setTimeout(() => {
+        dispatch(dismissMessage());
+      }, 5000);
     });
   };
 }
@@ -48,8 +51,14 @@ export function addSelectedPoll(poll) {
 
 export function getPollRequest(poll) {
   return (dispatch) => {
-    return axios.get(`/getPoll?slug=${poll}`) // TODO: fix temp
-      .then(res => dispatch(addSelectedPoll(res.data.poll)));
+    return axios.get(`/getPoll?slug=${poll}`)
+      .then(res => dispatch(addSelectedPoll(res.data.poll)))
+      .catch(() => {
+        dispatch(generalErrorMessage());
+        setTimeout(() => {
+          dispatch(dismissMessage());
+        }, 5000);
+      });
   };
 }
 
@@ -63,7 +72,13 @@ export function addPolls(polls) {
 export function fetchPolls() {
   return (dispatch) => {
     return axios.get('/getPolls')
-      .then(res => dispatch(addPolls(res.data.polls)));
+      .then(res => dispatch(addPolls(res.data.polls)))
+      .catch(() => {
+        dispatch(generalErrorMessage());
+        setTimeout(() => {
+          dispatch(dismissMessage());
+        }, 5000);
+      });
   };
 }
 
@@ -105,7 +120,6 @@ export function voteRequest(pollId, optionId, userId) {
       .catch(() => {
         dispatch(undoVote(pollId, optionId));
         dispatch(generalErrorMessage());
-        // TODO: leave error message up?
         setTimeout(() => {
           dispatch(dismissMessage());
         }, 5000);
@@ -123,6 +137,12 @@ export function deletePoll(poll) {
 export function deletePollRequest(poll) {
   return (dispatch) => {
     return axios.post('/deletePoll', {pollId: poll._id})
-      .then(() => dispatch(deletePoll(poll)));
+      .then(() => dispatch(deletePoll(poll)))
+      .catch(() => {
+        dispatch(generalErrorMessage());
+        setTimeout(() => {
+          dispatch(dismissMessage());
+        }, 5000);
+      });
   };
 }
