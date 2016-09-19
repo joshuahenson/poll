@@ -1,20 +1,21 @@
 import React, { PropTypes } from 'react';
 import { Link } from 'react-router';
 import { connect } from 'react-redux';
-import { Navbar, Nav, NavItem } from 'react-bootstrap';
+import { Nav, NavItem } from 'react-bootstrap';
+import Navbar, { Header, Brand, Toggle, Collapse } from 'react-bootstrap/lib/Navbar';// syntax for production
 import { LinkContainer } from 'react-router-bootstrap';
 import { logOut } from '../actions/users';
 
 const Navigation = ({ user, logOut }) => {
     return (
       <Navbar fluid>
-        <Navbar.Header>
-          <Navbar.Brand>
+        <Header>
+          <Brand>
             <Link to="/">Pollster</Link>
-          </Navbar.Brand>
-          <Navbar.Toggle />
-        </Navbar.Header>
-        <Navbar.Collapse>
+          </Brand>
+          <Toggle />
+        </Header>
+        <Collapse>
           { user.authenticated ? ([
             <Nav key="left">
               <LinkContainer to="/about">
@@ -41,7 +42,7 @@ const Navigation = ({ user, logOut }) => {
               </LinkContainer>
             </Nav>
           ])}
-        </Navbar.Collapse>
+        </Collapse>
       </Navbar>
     );
 };
