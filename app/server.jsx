@@ -55,6 +55,7 @@ export default function render(req, res) {
   const store = configureStore({
     user: {
       authenticated,
+      ip: req.ip,
       isWaiting: false,
       userName: req.user ? req.user.profile.name : null,
       userId: req.user ? req.user._id : null,

@@ -76,6 +76,7 @@ export function deletePoll(req, res) {
 export function vote(req, res) {
   const pollId = req.body.pollId;
   const optionId = req.body.optionId;
+  const userId = req.body.userId;
   const userIp = req.ip;
   Poll.findById(pollId, (err, poll) => {
     if (err) {
@@ -83,7 +84,11 @@ export function vote(req, res) {
     }
     const option = poll.options.id(optionId);
     option.votes += 1;
-    poll.ipVotes.push(userIp);
+    if (userId) {
+      poll.authVotes.push(userId);
+    } else {
+      poll.ipVotes.push(userIp);
+    }
     poll.save((err) => {
       if (err) {
         res.status(500).send(err);

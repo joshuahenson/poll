@@ -9,6 +9,13 @@ const updateOptions = (state, action) => {
       return Object.assign({}, state, {
         votes: state.votes + 1
       });
+    case types.UNDO_VOTE:
+      if (state._id !== action.optionId) {
+        return state;
+      }
+      return Object.assign({}, state, {
+        votes: state.votes - 1
+      });
     default:
       return state;
   }
@@ -21,11 +28,20 @@ const poll = (state = {options: [{option: '', votes: 0}]}, action) => {
       return action.poll;
 
     case types.VOTE:
-          return Object.assign({}, state, {
-            options: state.options.map(t =>
-              updateOptions(t, action)
-            )
-          });
+    case types.UNDO_VOTE:
+      return Object.assign({}, state, {
+        options: state.options.map(t =>
+          updateOptions(t, action)
+        )
+      });
+    case types.ADD_AUTH_VOTE:
+      return Object.assign({}, state, {
+        authVotes: [...state.authVotes, action.userId]
+      });
+    case types.ADD_IP_VOTE:
+      return Object.assign({}, state, {
+        ipVotes: [...state.ipVotes, action.ip]
+      });
     default:
       return state;
   }

@@ -67,6 +67,20 @@ export function fetchPolls() {
   };
 }
 
+export function addIpVote(ip) {
+  return {
+    type: types.ADD_IP_VOTE,
+    ip
+  };
+}
+
+export function addAuthVote(userId) {
+  return {
+    type: types.ADD_AUTH_VOTE,
+    userId
+  };
+}
+
 export function vote(pollId, optionId) {
   return {
     type: types.VOTE,
@@ -75,18 +89,26 @@ export function vote(pollId, optionId) {
   };
 }
 
-export function voteRequest(pollId, optionId) {
+export function undoVote(pollId, optionId) {
+  return {
+    type: types.UNDO_VOTE,
+    pollId,
+    optionId
+  };
+}
+
+export function voteRequest(pollId, optionId, userId) {
   return dispatch => {
-    // TODO: dispatch vote here
-    return axios.post('/vote', {pollId, optionId})
+    dispatch(vote(pollId, optionId));
+    return axios.post('/vote', {pollId, optionId, userId})
       .then()
       .catch(() => {
+        dispatch(undoVote(pollId, optionId));
         dispatch(generalErrorMessage());
         // TODO: leave error message up?
         setTimeout(() => {
           dispatch(dismissMessage());
         }, 5000);
-        // TODO: rollback vote
       });
   };
 }

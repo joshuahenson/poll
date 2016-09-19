@@ -108,8 +108,17 @@ const submittingGoogle = (
   }
 };
 
+// ip address determined in server.jsx
+// Yes, this seems like a hacky way to get ip address in redux
+const ip = (
+  state = ''
+) => {
+  return state;
+};
+
 const userReducer = combineReducers({
   authenticated,
+  ip,
   isLogin,
   isWaiting,
   submittingGoogle,

@@ -17,3 +17,6 @@ export const ADD_SELECTED_POLL = 'ADD_SELECTED_POLL';
 export const ADD_POLL_REQUEST = 'ADD_POLL_REQUEST';
 export const DELETE_POLL = 'DELETE_POLL';
 export const VOTE = 'VOTE';
+export const UNDO_VOTE = 'UNDO_VOTE';
+export const ADD_AUTH_VOTE = 'ADD_AUTH_VOTE';
+export const ADD_IP_VOTE = 'ADD_IP_VOTE';

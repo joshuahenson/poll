@@ -3,7 +3,7 @@ import Helmet from 'react-helmet';
 import { connect } from 'react-redux';
 import { VictoryPie } from 'victory';
 import { Button } from 'react-bootstrap';
-import { getPollRequest, vote, voteRequest, deletePollRequest } from '../actions/polls';
+import { getPollRequest, vote, voteRequest, deletePollRequest, addAuthVote, addIpVote } from '../actions/polls';
 import DeletePoll from './DeletePoll';
 
 class PollDetail extends Component {
@@ -11,16 +11,29 @@ class PollDetail extends Component {
     super(props);
     this.radioClick = this.radioClick.bind(this);
     this.vote = this.vote.bind(this);
-    this.state = { vote: null };
+    this.state = {
+      vote: null,
+      message: ''
+    };
   }
   radioClick(e) {
     this.setState({ vote: e.target.value });
   }
-  vote(e) {
-    e.preventDefault();
-    // testing separate reducer and async actions
-    this.props.vote(this.props.poll._id, this.state.vote);
-    this.props.voteRequest(this.props.poll._id, this.state.vote);
+  vote() {
+    if (this.props.user.authenticated) {
+      if (this.props.poll.authVotes.includes(this.props.user.userId)) {
+        this.setState({message: 'You have already voted on this poll'});
+      } else { // userId not found to have voted
+        this.props.voteRequest(this.props.poll._id, this.state.vote, this.props.user.userId);
+        this.props.addAuthVote(this.props.user.userId);
+      }
+    } else if (this.props.poll.ipVotes.includes(this.props.user.ip)) {
+        this.setState({message: 'Only one anonymous vote per location is allowed'});
+    } else { // userId not found to have voted
+      this.props.voteRequest(this.props.poll._id, this.state.vote, this.props.user.userId);
+      console.log(this.props.user.ip);
+      this.props.addIpVote(this.props.user.ip);
+    }
   }
   render() {
     const pieData = this.props.poll.options.map((obj) => (
@@ -66,6 +79,9 @@ class PollDetail extends Component {
                   Vote
                 </Button>
               </form>
+              <div className="text-danger">
+                {this.state.message}
+              </div>
               <hr />
               <h5>Current Results</h5>
               <table className="table">
@@ -114,16 +130,22 @@ PollDetail.need = [(params) => getPollRequest.bind(null, params.slug)()];
 
 PollDetail.propTypes = {
   poll: PropTypes.object,
+  user: PropTypes.object,
   getPollRequest: PropTypes.func,
   deletePollRequest: PropTypes.func,
   vote: PropTypes.func,
-  voteRequest: PropTypes.func
+  voteRequest: PropTypes.func,
+  addAuthVote: PropTypes.func,
+  addIpVote: PropTypes.func
 };
 
 function mapStateToProps(store) {
   return {
-    poll: (store.poll)
+    poll: store.poll,
+    user: store.user
   };
 }
 
-export default connect(mapStateToProps, { getPollRequest, vote, voteRequest, deletePollRequest })(PollDetail);
+export default connect(mapStateToProps, {
+  getPollRequest, vote, voteRequest, deletePollRequest, addAuthVote, addIpVote
+})(PollDetail);
