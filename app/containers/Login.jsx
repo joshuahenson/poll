@@ -32,7 +32,7 @@ class Login extends Component {
     return (
       <div>
         <div className="text-center">
-          <h2>Login with Email</h2>
+          <h2>Log in with Email</h2>
           <div>
             If you don't yet have an account. &nbsp;
             <a onClick={toggleLoginMode}>
