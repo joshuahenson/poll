@@ -21,13 +21,13 @@ class PollDetail extends Component {
   }
   vote() {
     if (this.props.user.authenticated) {
-      if (this.props.poll.authVotes.includes(this.props.user.userId)) {
+      if (this.props.poll.authVotes.indexOf(this.props.user.userId) !== -1) {
         this.setState({message: 'You have already voted on this poll'});
       } else { // userId not found to have voted
         this.props.voteRequest(this.props.poll._id, this.state.vote, this.props.user.userId);
         this.props.addAuthVote(this.props.user.userId);
       }
-    } else if (this.props.poll.ipVotes.includes(this.props.user.ip)) {
+    } else if (this.props.poll.ipVotes.indexOf(this.props.user.ip) !== -1) {
         this.setState({message: 'Only one anonymous vote per location is allowed'});
     } else { // userId not found to have voted
       this.props.voteRequest(this.props.poll._id, this.state.vote, this.props.user.userId);
